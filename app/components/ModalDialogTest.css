@@ -1,0 +1,85 @@
+.ModalDialogTest{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ModalDialogTestBody{
+    text-align: center;
+    width: 320px;
+    height: 450px;
+    border-radius: 18px;
+    background-color: rgba(0 ,0 ,0 ,0.7);
+}
+
+.ModalDialogTestBody > .Title {
+    margin-top: 4px;
+    font-size: 20px;
+    color: white;
+}
+
+.ModalDialogTestBody > .Content {
+    flex: 1;
+    font-size: 14px;
+    color: rgba(255, 255, 255,0.7);
+}
+
+.ModalDialogTest > .Selection {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+}
+
+.ModalDialogTest > .Selection > .Cancel {
+    margin-top: 15px;
+    font-size: 30px;
+    text-align: center;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(0 ,0 ,0 , 0.7);
+    cursor: pointer;
+}
+.ModalDialogTest > .Selection > .Cancel:hover {
+    animation: CancelAnimation 0.5s;
+    background-color: rgba(255 ,0 , 0, 0.7);
+}
+
+@keyframes CancelAnimation {
+    from{
+        background-color: rgba(0 ,0 , 0 ,0.7);
+    }
+    to{
+        background-color: rgba(255 ,0 , 0, 0.7);
+    }
+}
+
+.ModalDialogTest > .Selection > .Ok {
+    margin-top: 15px;
+    padding-top: 5px;
+    font-size: 20px;
+    text-align: center;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background-color: rgba(0 ,0 ,0 , 0.7);
+    cursor: pointer;
+}
+
+.ModalDialogTest > .Selection > .Ok:hover{
+    animation: OkAnimation 0.5s;
+    background-color: rgba(0 , 255 , 0 , 0.7);
+}
+
+@keyframes  OkAnimation {
+    from{
+        background-color: rgba(0 , 0 , 0 ,0.7);
+    }
+    to{
+        background-color: rgba(0 , 255 , 0, 0.7);
+    }
+}
