@@ -1,69 +1,70 @@
 import React from 'react';
 import { QueueAnim, Button ,Carousel ,Card } from 'antd';
 
+import getData from '../data/netData.jsx';
+
 import './welcome.css';
 
 export default class Welcome extends React.Component {
     constructor(props){
         super(props);
         this.state = {
+            city:"",
             weathers:{
-                yesterday :{},
-                today:{},
-                tomorrow:{}
+                history:{},
+                forecast:{},
+                today:{}
             },
-            Card:{
-                card_1:{},
-                card_2:{},
-                card_3:{},
-                card_4:{}
+            cards:{
+                0:{},
+                1:{},
+                2:{},
+                3:{}
             }
         }
     }
 
     componentDidMount(){
-       fetch('data/weather.json')
-           .then((response) => {
-               return response.json();
-           })
-           .then((data)=>{
-                this.setState({weathers:data});
-           }) ;
-        const weatherUrl = 'http://apis.baidu.com/apistore/weatherservice/recentweathers?cityid=101010100';
-        const headers = new Headers();
-        headers.append('apikey','471cd12cec1fcb77cfdea3974d6f7a87');
-        const req = new Request(weatherUrl,{method:'GET',headers:headers });
-        fetch(req).then((response) => {
-            return response.json();
-        })
-        .then((data)=>{
-            console.log(data)
+        getData.getWeathers('101010100').then((data)=>{
+            const weathers ={
+                yesterday:{},
+                today:{},
+                tomorrow:{}
+            };
+            weathers.yesterday = data.retData.history[6];
+            weathers.today = data.retData.today;
+            weathers.tomorrow = data.retData.forecast[0];
+            this.setState({ weathers: weathers });
+        });
+        getData.getMvImage(4).then((data)=>{
+            this.setState({ cards : data.newslist });
         });
     }
 
-    renderWeathersOption(){
+    renderWeathersItem(){
         const weathers = this.state.weathers;
-        const weathersOptions = [];
+        const weathersItems = [];
         for(var obj in weathers){
-            let option = weathers[obj];
+            let item = weathers[obj];
             let weathersOption  = (
                 <div style={{ display: "flex",flexDirection :"column"}}>
-                    <span>天气：{option.weather}</span>
-                    <span>温度：{option.T}</span>
-                    <spam>风力：{option.F}</spam>
-                    <span>时间：{option.time}</span>
+                    <span>天气：{item.type}</span>
+                    <span>最高温度：{item.hightemp}</span>
+                    <span>最低温度：{item.lowtemp}</span>
+                    <spam>风力：{item.fengli}</spam>
+                    <span>时间：{item.date}</span>
                 </div>
             );
-            weathersOptions.push(weathersOption);
+            weathersItems.push(weathersOption);
         }
-        return weathersOptions;
+        return weathersItems;
     }
 
     renderWeathers(){
-        const WeathersOption = this.renderWeathersOption();
-        const Weathers = WeathersOption.map((item,i) => {
+        const WeathersItems = this.renderWeathersItem();
+        const Weathers = WeathersItems.map((item,i) => {
             return(
-                <div className="Option">
+                <div className="Item">
                     {item}
                 </div>
             );
@@ -75,17 +76,40 @@ export default class Welcome extends React.Component {
         );
     }
 
-    renderCard(){
-        return(
-            <Card style={{ width:240  }} bodyStyle={{ padding:0 }}>
-                <div style={{ display:"block" }}>
-                    <img width="100%" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" alt="example"/>
+    renderCardsItem(){
+        const MvImages = this.state.cards;
+        const MvImagesItems = [];
+        for(var obj in MvImages){
+            let item = MvImages[obj];
+            let MvImageItem = (
+                <Card style={{ width:240  }} bodyStyle={{ padding:0 }}>
+                    <div style={{ display:"block" }}>
+                        <img width="100%" src={item.picUrl} alt="example"/>
+                    </div>
+                    <div style={{ color: "#999"}}>
+                        <h3>{item.title}</h3>
+                        <p>{item.description}</p>
+                    </div>
+                </Card>
+            );
+            MvImagesItems.push(MvImageItem);
+        }
+        return MvImagesItems;
+    }
+
+    renderCards(){
+        const CardsItems = this.renderCardsItem();
+        const Cards = CardsItems.map((item,i)=>{
+            return(
+                <div>
+                    {item}
                 </div>
-                <div style={{ color: "#999"}}>
-                    <h3>Europe Street beat</h3>
-                    <p>www.instagram.com</p>
-                </div>
-            </Card>
+            );
+        });
+        return (
+            <div>
+                {Cards}
+            </div>
         );
     }
 
@@ -104,7 +128,7 @@ export default class Welcome extends React.Component {
                         {this.renderWeathers()}
                     </div>
                     <div className="WelcomeItem1" key="b">
-                        {this.renderCard()}
+                        {this.renderCards()}
                     </div>
                 </QueueAnim>
             </div>

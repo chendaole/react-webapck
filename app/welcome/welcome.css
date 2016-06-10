@@ -5,14 +5,14 @@
 
 .WelcomeItem0 >div {
     width: 100%;
-    height: 100px;
+    height: 180px;
     display: flex;
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
 }
 
-.WelcomeItem0 > div > .Option{
+.WelcomeItem0 > div > .Item{
     width: 100%;
     height: 100%;
     border-right: #a2a1a7;
@@ -21,21 +21,32 @@
     align-items: center;
 }
 
-.WelcomeItem1 {
-    width: 100%;
-    flex: 1;
-}
-
 .WelcomeItem0 > div > .YesterdayWeather {
     width: 300px;
     height: 100%;
 }
+
 .WelcomeItem0 > div > .TodayWeather {
     flex: 1;
     width: 300px;
     height: 100%;
 }
+
 .WelcomeItem0 > div > .TomorrowWeather {
     width: 300px;
     height: 100%;
+}
+
+.WelcomeItem1 {
+    width: 100%;
+    flex: 1;
+}
+
+.WelcomeItem1 > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 20px;
 }
