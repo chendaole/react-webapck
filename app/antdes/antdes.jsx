@@ -11,6 +11,7 @@ import 'fetch-ie8/fetch.js';
 
 // 引入表格数据
 import {data, columns} from '../data/tableData.jsx';
+import netData from '../data/netData.jsx';;
 
 import './antdes.css';
 
@@ -67,6 +68,9 @@ export default class Antdes extends React.Component {
             .catch((error) => {
                 console.log(error.message);
             });
+        netData.getMovie().then((data) => {
+            console.log("ce");
+        });
     }
     
     render() {
